@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Parkwise | Parking Management</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="authScreen" class="auth-screen hidden" aria-labelledby="authTitle">
+  <form id="authForm" class="auth-card">
+    <span class="brand"><span class="brand-mark">P<span>.</span></span><span>parkwise<small>PARKING MANAGEMENT</small></span></span>
+    <h1 id="authTitle">Sign in</h1>
+    <p id="authNote">Enter your username and password.</p>
+    <label id="authNameRow" class="hidden">Full name<input id="authName" autocomplete="name" maxlength="60"></label>
+    <label>Username<input id="authUsername" autocomplete="username" maxlength="30" required></label>
+    <label>Password<input id="authPassword" type="password" autocomplete="current-password" maxlength="128" required></label>
+    <p id="authError" class="auth-error" role="alert"></p>
+    <button id="authSubmit" class="button primary full" type="submit">Sign in</button>
+  </form>
+</section>
+<div class="app-shell hidden">
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard"><span class="brand-mark">P<span>.</span></span><span>parkwise<small>PARKING MANAGEMENT</small></span></a>
+    <div class="sidebar-label">WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <a href="#dashboard" class="nav-link active"><span>◫</span> Dashboard</a>
+      <a href="#booking" class="nav-link"><span>⊞</span> New booking</a>
+      <a href="#bookings" class="nav-link"><span>☷</span> All bookings</a>
+      <a href="#rates" class="nav-link"><span>◷</span> Rates &amp; timing</a>
+      <a href="#users" class="nav-link"><span>☺</span> <span id="usersLink" class="nav-text">Users</span></a>
+    </nav>
+    <div class="sidebar-bottom"><div class="status-dot"></div><div><strong id="signedInName"></strong><small id="signedInRole"></small></div></div>
+  </aside>
+  <main>
+    <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="breadcrumb-divider"> / </span><strong>Overview</strong></div><div class="top-right"><span class="live-dot"></span> Parking management <span class="avatar" id="avatar">P</span><button id="logout" class="link-button" type="button">Sign out</button></div></header>
+    <div class="content">
+      <section id="dashboard" class="intro"><div><span class="eyebrow"><span></span> PARKING OPERATIONS</span><h1>Good to see you<span class="accent">.</span></h1><p>Everything you need to manage your parking space, in one place.</p></div><a class="button primary" href="#booking">＋ &nbsp; New booking</a></section>
+      <section class="stats-grid" aria-label="Parking statistics">
+        <article class="stat"><div class="stat-head">Total bookings <span>↗</span></div><div class="stat-number" id="total">—</div><div class="stat-note">All-time reservations</div></article>
+        <article class="stat"><div class="stat-head">Checked in <span>↗</span></div><div class="stat-number" id="checkedIn">—</div><div class="stat-note"><i class="green-dot"></i> Currently marked on-site</div></article>
+        <article class="stat"><div class="stat-head">Completed <span>↗</span></div><div class="stat-number" id="completed">—</div><div class="stat-note">Checked-out bookings</div></article>
+        <article class="stat highlight"><div class="stat-head">Completed charges <span>↗</span></div><div class="stat-number" id="charges">—</div><div class="stat-note">Booking charges, not payments</div></article>
+      </section>
+      <div class="section-grid">
+        <section class="panel booking-panel" id="booking">
+          <div class="panel-heading"><div><span class="overline">01 / RESERVATIONS</span><h2>Book a parking slot</h2><p>Choose a time and find the right spot.</p></div><span class="panel-icon">↗</span></div>
+          <img class="panel-photo" src="images/scooters-row.jpg" alt="Two-wheelers parked in rows under trees">
+          <form id="availabilityForm">
+            <div class="form-grid"><label>Vehicle registration<input id="registration" placeholder="e.g. MH12AB1234" maxlength="30" required></label><label>Vehicle type<select id="vehicleType"><option value="CAR">Car</option><option value="TWO_WHEELER">Two-wheeler</option></select></label>
+              <label>Start date &amp; time<input type="datetime-local" id="startTime" step="3600" required><small>Future time, on the hour</small></label><label>Duration<select id="duration"><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option></select></label></div>
+            <button class="button dark" type="submit">Find available slots <span>→</span></button>
+          </form>
+          <div id="availabilityResult" class="availability hidden"><div class="availability-heading"><div><span class="overline">SELECT A SPOT</span><h3>Available slots</h3></div><div class="quote"><small>ESTIMATED TOTAL</small><strong id="quotePrice">₹0</strong></div></div><div class="slot-list" id="slots"></div><p class="availability-note" id="availabilityNote"></p><button id="confirmBooking" class="button primary full" disabled>Confirm booking <span>→</span></button></div>
+        </section>
+        <section class="panel rate-panel" id="rates"><div class="panel-heading"><div><span class="overline">02 / PRICING</span><h2>Simple, fair rates.</h2><p>Charged for each hour of your booking.</p></div></div>
+          <div class="vehicle-photos"><figure><img src="images/cars-row.jpg" alt="Row of parked cars"><figcaption>Cars</figcaption></figure><figure><img src="images/scooter.jpg" alt="Orange scooter parked on a street"><figcaption>Two-wheelers</figcaption></figure></div>
+          <div class="rate-card"><div class="rate-icon">↗</div><div><strong>Peak hours</strong><small>09:00 - 18:00</small></div><div class="rate-values"><b>₹50 <small>/ car</small></b><b>₹30 <small>/ two-wheeler</small></b></div></div>
+          <div class="rate-card"><div class="rate-icon muted">◷</div><div><strong>Off-peak</strong><small>18:00 - 09:00</small></div><div class="rate-values"><b>₹30 <small>/ car</small></b><b>₹20 <small>/ two-wheeler</small></b></div></div>
+          <div class="discount"><span>✦</span><div><strong>Stay a little longer</strong><p>Save 10% on bookings of 4 or 5 hours.</p></div></div><p class="rate-footnote">Rates shown per hour. Charges are estimates and no payment is collected through this application.</p>
+        </section>
+      </div>
+      <section class="panel table-panel" id="bookings"><div class="panel-heading table-heading"><div><span class="overline">03 / ACTIVITY</span><h2>Booking records</h2><p>Search, manage, and view your reservations.</p></div><button class="button outline" id="refresh">↻ &nbsp; Refresh</button></div>
+        <img class="panel-photo records-photo" src="images/parking-lot-aerial.jpg" alt="Aerial view of a parking lot">
+        <form id="searchForm" class="search-bar"><label class="sr-only" for="searchBy">Search by</label><select id="searchBy"><option value="registration">Registration</option><option value="id">Booking ID</option><option value="slot">Slot number</option></select><label class="sr-only" for="searchInput">Search value</label><input id="searchInput" placeholder="Search bookings..."><button class="button dark" type="submit">Search</button><button class="button text-button" id="clearSearch" type="button">Clear</button></form>
+        <div class="table-scroll"><table><thead><tr><th>BOOKING</th><th>VEHICLE</th><th>SLOT</th><th>RESERVATION</th><th>CHARGE</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="bookingRows"><tr><td colspan="7" class="empty">Loading bookings...</td></tr></tbody></table></div>
+      </section>
+      <section class="panel table-panel" id="users"><div class="panel-heading table-heading"><div><span class="overline">04 / ACCESS</span><h2 id="usersTitle">Users</h2><p id="usersNote"></p></div><button class="button outline" id="newUser" type="button">＋ &nbsp; New user</button></div>
+        <form id="userForm" class="user-form hidden">
+          <h3 id="userFormTitle">New user</h3>
+          <div class="form-grid">
+            <label id="userUsernameRow">Username<input id="userUsername" maxlength="30" autocomplete="off"></label>
+            <label>Full name<input id="userFullName" maxlength="60" required autocomplete="off"></label>
+            <label id="userRoleRow">Role<select id="userRole"><option value="STAFF">Staff</option><option value="ADMIN">Administrator</option></select></label>
+            <label><span id="userPasswordLabel">Password</span><input id="userPassword" type="password" maxlength="128" autocomplete="new-password"></label>
+            <label id="userCurrentRow" class="hidden">Your current password<input id="userCurrent" type="password" maxlength="128" autocomplete="current-password"></label>
+          </div>
+          <div class="user-form-actions"><button class="button dark" type="submit">Save user</button><button class="button text-button" id="cancelUser" type="button">Cancel</button></div>
+        </form>
+        <div class="table-scroll"><table><thead><tr><th>USERNAME</th><th>FULL NAME</th><th>ROLE</th><th>CREATED</th><th>ACTIONS</th></tr></thead><tbody id="userRows"></tbody></table></div>
+      </section>
+      <footer><span>Parkwise · Parking made simpler. Photos from Unsplash.</span><span>LOCAL MANAGEMENT SYSTEM</span></footer>
+    </div>
+  </main>
+</div>
+<dialog id="receiptDialog"><div class="receipt-head"><div><span class="overline">PARKWISE</span><h2>Booking receipt</h2></div><button id="closeReceipt" class="icon-button" aria-label="Close">×</button></div><div id="receiptContent"></div><div class="dialog-actions"><button id="printReceipt" class="button primary">Print / save as PDF</button></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body></html>

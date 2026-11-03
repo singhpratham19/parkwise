@@ -1,0 +1,5 @@
+/target/
+/parking.db
+/parking.db-*
+/parkwise-before-login.jar
+.DS_Store
